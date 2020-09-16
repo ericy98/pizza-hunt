@@ -23,10 +23,11 @@ const commentController = {
     },
 
     removeComment({ params }, res) {
-        Comment.findOneAndDelete({ _id: params.id })
+        Comment.findOneAndDelete({ _id: params.commentId })
             .then(deletedComment => {
                 if (!deletedComment) {
-                    return res.status(404).json({ message: 'No pizza found with this id. Sorry!' });
+                    res.status(404).json({ message: 'No pizza found with this id. Sorry!' });
+                    return;
                 }
                 return Pizza.findOneAndUpdate(
                     { _id: params.pizzaId },
